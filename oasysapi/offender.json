@@ -1,4 +1,8 @@
 [
-{"request" : [ { "offender_id" : 12345 } ], "response" : [ {"DOB" : "01-01-1987"} ] },
-{"request" : [ { "offender_id" : 98765 } ], "response" : [ {"DOB" : "02-02-1970"} ] }
+    {"keys" : [ "offender_id", "PNC", "Gender" ], 
+        "values" : [ 12345, "A9998/02", "M" ], 
+        "response" : [ "01-01-1987", "TEST" ] } ,
+    {"keys" : [ "offender_id", "PNC", "Gender" ], 
+        "values" : [ 98765, "A9999/01", "M" ], 
+        "response" : [ "01-01-1987", "TEST" ] } 
 ]

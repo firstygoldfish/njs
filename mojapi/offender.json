@@ -1,0 +1,11 @@
+[
+    {"keys" : [ "offender_id", "PNC", "Gender" ], 
+        "values" : [ 12345, "A9998/02", null ], 
+        "response" : { "DOB" : "01-01-1987", "AVALUE" : "Row1" } } ,
+    {"keys" : [ "offender_id", "PNC", "Gender" ], 
+        "values" : [ 98765, "A9999/01", "M" ], 
+        "response" : { "DOB" : "01-01-1987", "AVALUE" : "Row2" } },
+    {"keys" : [ "offender_id", "PNC", "Gender" ], 
+        "values" : [ "", "", "" ], 
+        "response" : { "STATUS" : "INVALID" } }
+]
