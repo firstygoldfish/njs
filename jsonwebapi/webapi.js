@@ -21,11 +21,15 @@ function displayOffenders(res){
 }
 
 function searchPK(res, offenders, offender_pk){
+	var found=0;
 	for (var i=0; i < offenders.length; i++) {
 		if (offenders[i].offender_pk == offender_pk) {
-			res.write('{"name":"'+offenders[i].name+'"}');
+			found++;
+			res.write('{{"status":"ok"},');
+			res.write('{"name":"'+offenders[i].name+'"}}');
 		}
 	}
+  if (found == 0) { res.write('{"status":"notfound"}'); }
 }
 
 function displayOfficers(res){
