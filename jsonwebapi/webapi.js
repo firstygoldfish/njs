@@ -5,6 +5,9 @@ var port = 8080;
 var ip = "127.0.0.1";
 var jsonfile = 'data.json';
 
+var notfound = '{"status":"notfound"}';
+var ok = '{"status":"ok"}';
+
 function badFile() {
 			console.log('ERROR:Cannot load JSON file '+jsonfile);
 			process.exit(1);
@@ -17,7 +20,8 @@ function loadJSON(filename = '') {
 }
 
 function displayOffenders(res){
-	offdata.offenders.forEach(element => res.write('{"name":"'+element.name+'","offender_pk:"'+element.offender_pk+'"}'));
+	res.write('{'+ok+',');
+	offdata.offenders.forEach(element => res.write('{"name":"'+element.name+'","offender_pk:"'+element.offender_pk+'"}}'));
 }
 
 function searchPK(res, offenders, offender_pk){
@@ -25,15 +29,16 @@ function searchPK(res, offenders, offender_pk){
 	for (var i=0; i < offenders.length; i++) {
 		if (offenders[i].offender_pk == offender_pk) {
 			found++;
-			res.write('{{"status":"ok"},');
+			res.write('{'+ok+',');
 			res.write('{"name":"'+offenders[i].name+'"}}');
 		}
 	}
-  if (found == 0) { res.write('{"status":"notfound"}'); }
+  if (found == 0) { res.write(notfound); }
 }
 
 function displayOfficers(res){
-	offdata.officers.forEach(element => res.write('{"name":"'+element.name+'","id:"'+element.id+'"}'));
+	res.write('{'+ok+',');
+	offdata.officers.forEach(element => res.write('{"name":"'+element.name+'","id:"'+element.id+'"}}'));
 }
 
 var offdata = loadJSON(jsonfile);
