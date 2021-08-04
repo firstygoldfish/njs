@@ -38,7 +38,8 @@ function searchPK(res, offenders, offender_pk){
 
 function displayOfficers(res){
 	res.write('{'+ok+',');
-	offdata.officers.forEach(element => res.write('{"name":"'+element.name+'","id:"'+element.id+'"}}'));
+	offdata.officers.forEach(element => res.write('{"name":"'+element.name+'","id:"'+element.id+'"},'));
+	res.write('}');
 }
 
 var offdata = loadJSON(jsonfile);
