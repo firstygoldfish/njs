@@ -7,6 +7,7 @@ var jsonfile = 'iomdata.json';
 /*-----------------------------DEFAULT STUFF---------------------------------*/
 var notfound = '{"status":"notfound"}';
 var ok = '{"status":"ok"}';
+var bad = '{"status":"badrequest"}';
 function badFile() {
 			console.log('ERROR:Cannot load JSON file '+jsonfile);
 			process.exit(1);
@@ -16,7 +17,7 @@ function loadJSON(filename = '') {
 		fs.existsSync(filename) ? fs.readFileSync(filename).toString() : badFile()
 	);
 }
-/*----------------------------------ENDPOINTS--------------------------------*/
+/*--------------------------ENDPOINT FUNCTIONS-------------------------------*/
 function displayRegistrations(res, crn) {
 	var found = 0;
 	for (var i=0; i< offdata.crn.length; i++){
@@ -27,19 +28,21 @@ function displayRegistrations(res, crn) {
 	}
 	if (found == 0) res.write(notfound);
 }
-
-var offdata = loadJSON(jsonfile);
-
+/*----------------------------------ENDPOINTS--------------------------------*/
 // SETUP ENDPOINTS/OPERATIONS
 var endpoints = {
-	crn: function(res,parts){ 
+	crn: function(res,parts){
 		var crn=parts[4];
 		var func=parts[5];
-		if (crn != undefined && func == "registrations") displayRegistrations(res, crn);
-
+		if (crn != undefined && func == "registrations") {
+		  displayRegistrations(res, crn);
+		} else {
+		  res.write(bad);
+		}
 	}
 }
 /*------------------------------------SERVER---------------------------------*/
+var offdata = loadJSON(jsonfile);
 http.createServer(function(req, res) {	//Example request /secure/offenders/crn/23456/registrations
 	var parts = req.url.split("/");
 	//Get the endpoint
