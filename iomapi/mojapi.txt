@@ -1,0 +1,121 @@
+GET/secure/offenders/crn/{crn}/registrations 
+Return the registrations for an offender using the crn
+requires ROLE_COMMUNITY
+Parameters
+Try it out
+Name	Description
+activeOnly
+boolean
+(query)	retrieve only active registrations
+Default value : false
+[-- \/]
+authenticated
+boolean
+(query)	[-- \/]
+authorities[0].authority
+string
+(query)	
+credentials
+object
+(query)	
+crn *
+string
+(path)	crn
+details
+object
+(query)	
+principal
+object
+(query)	
+Responses
+Response content type 
+[application/json \/]
+Code	Description
+200	OK
+•	Example Value
+•	Model
+{
+  "registrations": [
+    {
+      "active": true,
+      "deregisteringNotes": "string",
+      "deregisteringOfficer": {
+        "code": "AN001A",
+        "forenames": "Sheila Linda",
+        "surname": "Hancock",
+        "unallocated": true
+      },
+      "deregisteringProbationArea": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "deregisteringTeam": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "endDate": "2021-01-30",
+      "nextReviewDate": "2021-01-30",
+      "notes": "string",
+      "numberOfPreviousDeregistrations": 0,
+      "offenderId": 2500343964,
+      "register": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "registerCategory": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "registerLevel": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "registeringOfficer": {
+        "code": "AN001A",
+        "forenames": "Sheila Linda",
+        "surname": "Hancock",
+        "unallocated": true
+      },
+      "registeringProbationArea": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "registeringTeam": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "registrationId": 2500064995,
+      "reviewPeriodMonths": 6,
+      "riskColour": "Amber",
+      "startDate": "2021-01-30",
+      "type": {
+        "code": "ABC123",
+        "description": "Some description"
+      },
+      "warnUser": true
+    }
+  ]
+}
+400	Invalid request
+•	Example Value
+•	Model
+{
+  "developerMessage": "Surname required",
+  "status": 400
+}
+401	JWT supplied invalid or absent
+403	Requires role ROLE_COMMUNITY
+404	Offender not found
+•	Example Value
+•	Model
+{
+  "developerMessage": "Surname required",
+  "status": 400
+}
+500	Unrecoverable error whilst processing request.
+•	Example Value
+•	Model
+{
+  "developerMessage": "Surname required",
+  "status": 400
+}
