@@ -8,42 +8,60 @@ var ip = "127.0.0.1";
 var notfound = '{"status":"notfound"}';
 var ok = '{"status":"ok"}';
 
-function displayOffenders(res){
-	res.write('{'+ok+',');
-	offdata.forEach(element => res.write('{"CRN":"'+element.crn+'"}}'));
+function displayOfficers(res){
+	sql = 'SELECT * from OFFICERS';
+	db.all(sql, [], (err, rows) => {
+	  if (err) {
+	    throw err;
+		}
+		if (rows.length > 0) {
+			res.write('<table border=1><tr><th>ID</th><th>Username</th></tr>');
+			rows.forEach((row) => {
+				res.write('<tr><td>'+row.id+'</td><td>'+row.name+'</td></tr>');
+			})
+			res.end('</table>');
+		} else {
+			res.end('No data found');
+		}
+	});
 }
 
-// SETUP ENDPOINTS/OPERATIONS
-var endpoints = {
-	display: function(res,parts){ 
-		displayOffenders(res); //Call displayOffenders function
-	}
+function displayOfficer(res,name){
+	sql = 'SELECT * from OFFICERS where name=\''+name+'\'';
+	db.all(sql, [], (err, rows) => {
+	  if (err) {
+	    throw err;
+		}
+		if (rows.length > 0) {
+		res.write('<table border=1><tr><th>ID</th><th>Username</th></tr>');
+		rows.forEach((row) => {
+			res.write('<tr><td>'+row.id+'</td><td>'+row.name+'</td></tr>');
+		})
+		res.end('</table>');
+		} else {
+			res.end('No data found');
+		}
+	});
 }
 
 http.createServer(function(req, res) {	
 	var parts = req.url.split("/");
-	//Get the endpoint
-	var endpoint = endpoints[parts[1]];
-	res.writeHead(200, {'Content-Type': 'text/plain'});
-	//Call the endpoint
-	endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
-	res.end('');
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	//Call the endpoint - Check first part of the URL request
+	if (parts[1] == "officers") {
+		displayOfficers(res);           // Call display officers
+	} else if (parts[1] == "officer") {
+		displayOfficer(res,parts[2]);              // Call display users
+	} else {
+		res.end('Invalid or Missing Request'); // End the response with error
+	}
 }).listen(port, ip);
 
-let db = new sqlite3.Database('my.db', (err) => {
+db = new sqlite3.Database('my.db', (err) => { // Open the database
   if (err) {
     console.error(err.message);
   }
   console.log('Connected to my database.');
-});
-
-db.serialize(() => {
-  db.each(`SELECT * FROM officers`, (err, row) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log(row.id + "\t" + row.name + "\t" + row.id);
-  });
 });
 
 console.log("Server running at http://"+ip+":"+port);

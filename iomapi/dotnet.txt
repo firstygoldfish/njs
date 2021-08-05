@@ -1,0 +1,61 @@
+public async Task<ActionResult<latestRecallObj>> RecallednomsNumber(string nomsNumber)
+        {
+            // -------------------------------------------------------------------
+            string SecurityKey = null;
+
+            string authHeader = Request.Headers["Authorization"];
+            if (authHeader != null && authHeader.StartsWith("Bearer"))
+            {
+                //Extract credentials
+                SecurityKey = authHeader.Substring("Bearer ".Length).Trim();
+
+            }
+            else
+            {
+                // no authorization header
+                return Unauthorized();
+            }
+            // -------------------------------------------------------------------
+
+            //
+
+            if (!ConfirmSecutityExists(SecurityKey))
+            {
+                return Unauthorized();
+            }
+            
+            //
+            // var foos = await db.Foos.Where(x => x.UserId == userId).ToListAsync();
+            //var temp = await _context.OffenderInfo.Where(x => x.NomisId == nomsNumber).ToListAsync();
+            //var offenderDev = temp[0];
+            var offenderDev = await _context.OffenderInfo.FindAsync(nomsNumber);
+
+            // Not found due to missing data
+            if (offenderDev == null)
+            {
+                return NotFound();
+            }
+
+            // Technical Issue
+            if (offenderDev.RecallInternalErrorCode != "200")
+            {
+                //
+                return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status405MethodNotAllowed);
+            }
+
+            // Not found due to missing LastRecalledDate
+            if (offenderDev.LastRecalledDate == "")
+            {
+                return NotFound(); // 404
+            }
+
+            // If the offender is found but there is not active custody record a 400 will be returned
+            if (offenderDev.ActiveCustodyRecord != "Y")
+            {
+                return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest); // 400
+            }
+
+            latestRecallObj OS = getlatestRecallObj(offenderDev);
+
+            return OS;
+        }
