@@ -8,7 +8,7 @@ var jsonfile = 'iomdata.json';
 var newcrnfile = 'newcrndata.json';
 var newiomcrnfile = 'newiomcrndata.json';
 /*--------------------------DO NOT CHANGE BELOW HERE--------------------------*/
-
+/*----------------------------------------------------------------------------*/
 /*---------------------------------VARIABLES----------------------------------*/
 var notfound = '{"status":"notfound"}';
 var ok = '{"status":"ok"}';
@@ -26,20 +26,18 @@ function loadJSON(filename = '') {
 }
 function securityHeader(req){
 	var secHeader = req.headers['authorization'];
-	if (secHeader != undefined && secHeader.substring(0,7) == "Bearer "){
+	if (secHeader !== undefined && secHeader.substring(0,7) == "Bearer "){
 		return true;
 	} else {
 		return false;
 	}
 }
-/*--------------------------ENDPOINT FUNCTIONS-------------------------------*/
+/*--------------------------ENDPOINT FUNCTIONS--------------------------------*/
 function listRegistrations(res) {
-	var row = 0;
-	res.write('<table style="border-spacing:1px;"><tr><th style="color:#cdba8d;background-color:#5571B4;padding:10px;">CRN</th><th style="color:#cdba8d;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
+	res.write('<table style="border-spacing:1px;"><tr><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">CRN</th><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
-		row++;
-		if (row%2 == 0) bgcol = 'B0BDDC';
-		if (row%2 != 0) bgcol = 'DCCFB0';
+		if ((i+1)%2 === 0) bgcol = 'B0BDDC';
+		if ((i+1)%2 !== 0) bgcol = 'DCCFB0';
 		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
@@ -52,7 +50,7 @@ function displayRegistrations(res, crn) {
 			res.write(JSON.stringify(offdata.crn[i].registrations, null, 4));
 		}
 	}
-	if (found == 0) res.write(notfound);
+	if (found === 0) res.write(notfound);
 }
 function addRegistration(res, crn, iom) {
 	var found = 0;
@@ -62,9 +60,9 @@ function addRegistration(res, crn, iom) {
 			res.write('CRN Already EXISTS');
 		}
 	}
-	if (found == 0) {
+	if (found === 0) {
 		if (iom) {
-			var newiomdata = loadJSON(newiomcrnfile); // Add IOM CRN	
+			var newiomdata = loadJSON(newiomcrnfile); // Add IOM CRN
 		} else {
 			var newiomdata = loadJSON(newcrnfile);    // Add NON IOM CRN
 		}
@@ -77,9 +75,9 @@ function addRegistration(res, crn, iom) {
 		    }
 		});
 		displayRegistrations(res, crn);
-	} 
+	}
 }
-/*----------------------------------ENDPOINTS--------------------------------*/
+/*----------------------------------ENDPOINTS---------------------------------*/
 // SETUP ENDPOINTS/OPERATIONS
 var endpoints = {
 	list: function(res,parts){         //List CRNs
@@ -87,7 +85,7 @@ var endpoints = {
 	},
 	addiom: function(res,parts){       //Add IOM CRN
 		var crn=parts[2];
-		if (crn != undefined) {
+		if (crn !== undefined) {
 		  addRegistration(res, crn, true);
 		} else {
 		  res.write(bad);
@@ -95,47 +93,44 @@ var endpoints = {
 	},
 	addnoniom: function(res,parts){    //Add NON-IOM CRN
 		var crn=parts[2];
-		if (crn != undefined) {
+		if (crn !== undefined) {
 		  addRegistration(res, crn, false);
 		} else {
 		  res.write(bad);
 		}
-	},  
+	},
 	crn: function(res,parts){          //List registrations for CRN
 		var crn=parts[4];
 		var func=parts[5];
-		if (crn != undefined && func == "registrations") {
+		if (crn !== undefined && func == "registrations") {
 		  displayRegistrations(res, crn);
 		} else {
 		  res.write(bad);
 		}
 	}
 }
-/*------------------------------------SERVER---------------------------------*/
+/*------------------------------------SERVER----------------------------------*/
 var offdata = loadJSON(jsonfile);
-http.createServer(function(req, res) {	//Example request /secure/offenders/crn/23456/registrations
+http.createServer(function(req, res) {	//Example URL /secure/offenders/crn/23456/registrations
 	var parts = req.url.split("/");
 	//Get the endpoint function
-	if (parts[1] == 'addiom') {
+	if (parts[1] == 'list') {
+		endpoint = endpoints[parts[1]];
+	} else if (parts[1] == 'addiom') {
 		endpoint = endpoints[parts[1]];
 	} else if (parts[1] == 'addnoniom') {
-		endpoint = endpoints[parts[1]];
-	} else if (parts[1] == 'list') {
 		endpoint = endpoints[parts[1]];
 	} else {
 		endpoint = endpoints[parts[3]];
 	}
-	//Do security check
-	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom') {
-		//Skip security check - Call the endpoint
+	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom') { //Skip security check-Call the endpoint
 		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
-	} else if (securityHeader(req) == true) {
+	} else if (securityHeader(req) === true) {                                   //Do security check
 		res.writeHead(200, {'Content-Type': 'text/plain'});
-		//Call the endpoint
 		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
 	} else {
 		res.writeHead(401, 'missing authorization header');
 	}
 	res.end('');
 }).listen(port, ip);
-console.log("Server running at http://"+ip+":"+port);
+console.log("Running http://"+ip+":"+port);
