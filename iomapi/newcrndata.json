@@ -2,9 +2,9 @@
         "registrations": [
             {
                 "active": true,
-                "nextReviewDate": "2022-01-12",
+                "nextReviewDate": "2019-01-12",
                 "numberOfPreviousDeregistrations": 0,
-                "offenderId": <OFFENDERID>,
+                "offenderId": 999999,
                 "register": {
                     "code": "2",
                     "description": "Alerts"

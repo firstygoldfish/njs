@@ -2,9 +2,9 @@
         "registrations": [
             {
                 "active": true,
-                "nextReviewDate": "2023-02-03",
+                "nextReviewDate": "2020-02-03",
                 "numberOfPreviousDeregistrations": 0,
-                "offenderId": <OFFENDERID>,
+                "offenderId": 999999,
                 "register": {
                     "code": "4",
                     "description": "Information"
@@ -41,7 +41,7 @@
                 "active": true,
                 "nextReviewDate": "2022-01-12",
                 "numberOfPreviousDeregistrations": 0,
-                "offenderId": <OFFENDERID>,
+                "offenderId": 999999,
                 "register": {
                     "code": "2",
                     "description": "Alerts"
