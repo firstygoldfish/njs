@@ -1,1 +1,2 @@
-node_modules/
+sqlite/node_modules/*
+iomsql/node_modules/*
