@@ -1,7 +1,6 @@
 var http = require('http'),
 	url = require("url"),
     fs = require('fs');
-
 /*--------------------------------CONFIGURATION-------------------------------*/
 var port = 8080;
 var ip = "127.0.0.1";
@@ -36,11 +35,11 @@ function securityHeader(req){
 /*--------------------------ENDPOINT FUNCTIONS-------------------------------*/
 function listRegistrations(res) {
 	var row = 0;
-	res.write('<table style="border-spacing:1px;"><tr><th style="background-color: #13BAEC;padding:10px;">CRN</th><th style="background-color: #13BAEC;padding:10px;">Registrations</th></tr>')
+	res.write('<table style="border-spacing:1px;"><tr><th style="color:#cdba8d;background-color:#5571B4;padding:10px;">CRN</th><th style="color:#cdba8d;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
 		row++;
-		if (row%2 == 0) bgcol = '2DD29D';
-		if (row%2 != 0) bgcol = 'B1934E';
+		if (row%2 == 0) bgcol = 'B0BDDC';
+		if (row%2 != 0) bgcol = 'DCCFB0';
 		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
@@ -127,8 +126,8 @@ http.createServer(function(req, res) {	//Example request /secure/offenders/crn/2
 		endpoint = endpoints[parts[3]];
 	}
 	//Do security check
-	if (parts[1] == 'list') {
-		//Skip security check for LIST - Call the endpoint
+	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom') {
+		//Skip security check - Call the endpoint
 		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
 	} else if (securityHeader(req) == true) {
 		res.writeHead(200, {'Content-Type': 'text/plain'});
