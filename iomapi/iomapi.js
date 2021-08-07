@@ -35,9 +35,13 @@ function securityHeader(req){
 }
 /*--------------------------ENDPOINT FUNCTIONS-------------------------------*/
 function listRegistrations(res) {
-	res.write('<table><tr><th>CRN</th><th>Registrations</th></tr>')
+	var row = 0;
+	res.write('<table style="border-spacing:1px;"><tr><th style="background-color: #13BAEC;padding:10px;">CRN</th><th style="background-color: #13BAEC;padding:10px;">Registrations</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
-		res.write('<tr><td valign="top"  style="border: 1px solid black;">'+offdata.crn[i].crn+'</td><td  style="border: 1px solid black;"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
+		row++;
+		if (row%2 == 0) bgcol = '2DD29D';
+		if (row%2 != 0) bgcol = 'B1934E';
+		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
 }
@@ -68,11 +72,10 @@ function addRegistration(res, crn, iom) {
 
 		newiomdata.crn = crn;
 		offdata.crn.push(newiomdata);
-		fs.writeFile('testdata.json', JSON.stringify(offdata, null, 4), (err) => {
+		fs.writeFile(jsonfile, JSON.stringify(offdata, null, 4), (err) => {
 		    if (err) {
 		        throw err;
 		    }
-		    console.log("JSON data is saved.");
 		});
 		displayRegistrations(res, crn);
 	} 
@@ -80,10 +83,10 @@ function addRegistration(res, crn, iom) {
 /*----------------------------------ENDPOINTS--------------------------------*/
 // SETUP ENDPOINTS/OPERATIONS
 var endpoints = {
-	list: function(res,parts){
+	list: function(res,parts){         //List CRNs
 		listRegistrations(res);
 	},
-	addiom: function(res,parts){
+	addiom: function(res,parts){       //Add IOM CRN
 		var crn=parts[2];
 		if (crn != undefined) {
 		  addRegistration(res, crn, true);
@@ -91,15 +94,15 @@ var endpoints = {
 		  res.write(bad);
 		}
 	},
-	addnoniom: function(res,parts){
+	addnoniom: function(res,parts){    //Add NON-IOM CRN
 		var crn=parts[2];
 		if (crn != undefined) {
 		  addRegistration(res, crn, false);
 		} else {
 		  res.write(bad);
 		}
-	},
-	crn: function(res,parts){
+	},  
+	crn: function(res,parts){          //List registrations for CRN
 		var crn=parts[4];
 		var func=parts[5];
 		if (crn != undefined && func == "registrations") {
@@ -113,7 +116,7 @@ var endpoints = {
 var offdata = loadJSON(jsonfile);
 http.createServer(function(req, res) {	//Example request /secure/offenders/crn/23456/registrations
 	var parts = req.url.split("/");
-	//Get the endpoint
+	//Get the endpoint function
 	if (parts[1] == 'addiom') {
 		endpoint = endpoints[parts[1]];
 	} else if (parts[1] == 'addnoniom') {
@@ -125,7 +128,7 @@ http.createServer(function(req, res) {	//Example request /secure/offenders/crn/2
 	}
 	//Do security check
 	if (parts[1] == 'list') {
-		//Call the endpoint
+		//Skip security check for LIST - Call the endpoint
 		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
 	} else if (securityHeader(req) == true) {
 		res.writeHead(200, {'Content-Type': 'text/plain'});
