@@ -20,7 +20,7 @@ function loadJSON(filename = '') {
 }
 function securityHeader(req){
 	var secHeader = req.headers['authorization'];
-	if (secHeader != undefined && secHeader.substring(0,7) == "Bearer "){
+	if (secHeader != undefined && secHeader.substring(0,6) == "Bearer"){
 		return true;
 	} else {
 		return false;
@@ -56,6 +56,7 @@ http.createServer(function(req, res) {	//Example request /secure/offenders/crn/2
 	var parts = req.url.split("/");
 	//Get the endpoint
 	var endpoint = endpoints[parts[3]];
+
 	//Do security check
 	if (securityHeader(req) == true) {
 		res.writeHead(200, {'Content-Type': 'text/plain'});
