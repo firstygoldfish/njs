@@ -9,7 +9,7 @@ var newcrnfile = 'newcrndata.json';
 var newiomcrnfile = 'newiomcrndata.json';
 /*--------------------------DO NOT CHANGE BELOW HERE--------------------------*/
 /*----------------------------------------------------------------------------*/
-/*---------------------------------VARIABLES----------------------------------*/
+/*----------------------------CORE VARIABLES----------------------------------*/
 var notfound = '{"status":"notfound"}';
 var ok = '{"status":"ok"}';
 var bad = '{"status":"badrequest"}';
@@ -45,7 +45,9 @@ function listRegistrations(res) {
 	for (var i=0; i < offdata.crn.length; i++){
 		if ((i+1)%2 === 0) bgcol = 'B0BDDC'; //Odd colour
 		if ((i+1)%2 !== 0) bgcol = 'DCCFB0'; //Even colour
-		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b><br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'"></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
+		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b>');
+		res.write('<br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'"></td><td style="background-color: #'+bgcol+';padding:5px">');
+		res.write('<pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
 }
@@ -82,7 +84,8 @@ function edit(res, crn, req) {
 			listRegistrations(res);
 		} else {
 			res.write(decodeURIComponent(req.url));
-			res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2><form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
+			res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2>');
+			res.write('<form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
 			res.write(JSON.stringify(registrations, null, 4));
 			res.write('</textarea><br/><input type="submit"></form>');
 		}
