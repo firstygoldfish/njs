@@ -1,6 +1,6 @@
 var http = require('http'),
-	url = require("url"),
-    fs = require('fs');
+	  url = require('url'),
+      fs = require('fs');
 /*--------------------------------CONFIGURATION-------------------------------*/
 var port = 8080;
 var ip = "127.0.0.1";
@@ -133,7 +133,7 @@ var endpoints = {
 		  res.write(bad);
 		}
 	},
-	edit: function(res,parts,req){    //Add NON-IOM CRN
+	edit: function(res,parts,req){     //Add NON-IOM CRN
 		var crn=parts[2];
 		if (crn.indexOf('?') > 0) crn = crn.substring(0,crn.indexOf('?'));  //Strip url parameters from POST
 		if (crn !== undefined) {
