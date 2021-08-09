@@ -36,8 +36,8 @@ function securityHeader(req){
 function listRegistrations(res) {
 	res.write('<table style="border-spacing:1px;"><tr><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">CRN</th><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
-		if ((i+1)%2 === 0) bgcol = 'B0BDDC';
-		if ((i+1)%2 !== 0) bgcol = 'DCCFB0';
+		if ((i+1)%2 === 0) bgcol = 'B0BDDC'; //Odd colour
+		if ((i+1)%2 !== 0) bgcol = 'DCCFB0'; //Even colour
 		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
@@ -51,6 +51,24 @@ function displayRegistrations(res, crn) {
 		}
 	}
 	if (found === 0) res.write(notfound);
+}
+function edit(res, crn, req) {
+	var found = 0;
+	var registrations = '';
+	for (var i=0; i< offdata.crn.length; i++){
+		if (offdata.crn[i].crn == crn) {
+			found++;
+			registrations = offdata.crn[i].registrations;
+		}
+	}
+	if (found === 0) {
+		res.write(notfound+',{crn:'+crn+'}');
+	} else {
+		res.write(decodeURIComponent(req.url));
+		res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2><form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
+		res.write(JSON.stringify(registrations, null, 4));
+		res.write('</textarea><br/><input type="submit"></form>');
+	}
 }
 function addRegistration(res, crn, iom) {
 	var found = 0;
@@ -99,6 +117,15 @@ var endpoints = {
 		  res.write(bad);
 		}
 	},
+	edit: function(res,parts,req){    //Add NON-IOM CRN
+		var crn=parts[2];
+		if (crn.indexOf('?') > 0) crn = crn.substring(0,crn.indexOf('?'));  //Strip url parameters from POST
+		if (crn !== undefined) {
+		  edit(res, crn, req);
+		} else {
+		  res.write(bad);
+		}
+	},
 	crn: function(res,parts){          //List registrations for CRN
 		var crn=parts[4];
 		var func=parts[5];
@@ -120,11 +147,14 @@ http.createServer(function(req, res) {	//Example URL /secure/offenders/crn/23456
 		endpoint = endpoints[parts[1]];
 	} else if (parts[1] == 'addnoniom') {
 		endpoint = endpoints[parts[1]];
-	} else {
+	} else if (parts[1] == 'edit') {
+		endpoint = endpoints[parts[1]];
+	}  else {
 		endpoint = endpoints[parts[3]];
 	}
-	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom') { //Skip security check-Call the endpoint
-		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
+	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom' || parts[1] == 'edit') { //Skip security check-Call the endpoint
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		endpoint ? endpoint(res,parts,req) : res.write('{"status":"Error"}');
 	} else if (securityHeader(req) === true) {                                   //Do security check
 		res.writeHead(200, {'Content-Type': 'text/plain'});
 		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
