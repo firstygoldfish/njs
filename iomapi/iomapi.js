@@ -108,7 +108,7 @@ function addRegistration(res, crn, iom) {
 		newiomdata.crn = crn;
 		offdata.crn.push(newiomdata);
 		saveJSON();
-		displayRegistrations(res, crn);
+		listRegistrations(res);
 	}
 }
 /*----------------------------------ENDPOINTS---------------------------------*/
