@@ -24,6 +24,13 @@ function loadJSON(filename = '') {
 		fs.existsSync(filename) ? fs.readFileSync(filename).toString() : badFile()
 	);
 }
+function saveJSON() {
+	fs.writeFile(jsonfile, JSON.stringify(offdata, null, 4), (err) => {
+	    if (err) {
+	        throw err;
+	    }
+	});
+}
 function securityHeader(req){
 	var secHeader = req.headers['authorization'];
 	if (secHeader !== undefined && secHeader.substring(0,7) == "Bearer "){
@@ -38,7 +45,7 @@ function listRegistrations(res) {
 	for (var i=0; i < offdata.crn.length; i++){
 		if ((i+1)%2 === 0) bgcol = 'B0BDDC'; //Odd colour
 		if ((i+1)%2 !== 0) bgcol = 'DCCFB0'; //Even colour
-		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
+		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b><br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'"></td><td style="background-color: #'+bgcol+';padding:5px"><pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
 }
@@ -54,20 +61,31 @@ function displayRegistrations(res, crn) {
 }
 function edit(res, crn, req) {
 	var found = 0;
+	var foundindex = 0;
 	var registrations = '';
 	for (var i=0; i< offdata.crn.length; i++){
 		if (offdata.crn[i].crn == crn) {
 			found++;
+			foundindex = i;
 			registrations = offdata.crn[i].registrations;
 		}
 	}
 	if (found === 0) {
 		res.write(notfound+',{crn:'+crn+'}');
 	} else {
-		res.write(decodeURIComponent(req.url));
-		res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2><form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
-		res.write(JSON.stringify(registrations, null, 4));
-		res.write('</textarea><br/><input type="submit"></form>');
+		var data = req.url.split('?');
+		var params = ''+data[1];
+		if (params.substring(0,5) == 'json=') {
+			data=decodeURIComponent(params.substring(5)).replace(/\+/g, ' ').replace(/\r?\n|\r/g, '');
+			offdata.crn[foundindex].registrations = JSON.parse(data);
+			saveJSON();
+			listRegistrations(res);
+		} else {
+			res.write(decodeURIComponent(req.url));
+			res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2><form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
+			res.write(JSON.stringify(registrations, null, 4));
+			res.write('</textarea><br/><input type="submit"></form>');
+		}
 	}
 }
 function addRegistration(res, crn, iom) {
@@ -84,14 +102,9 @@ function addRegistration(res, crn, iom) {
 		} else {
 			var newiomdata = loadJSON(newcrnfile);    // Add NON IOM CRN
 		}
-
 		newiomdata.crn = crn;
 		offdata.crn.push(newiomdata);
-		fs.writeFile(jsonfile, JSON.stringify(offdata, null, 4), (err) => {
-		    if (err) {
-		        throw err;
-		    }
-		});
+		saveJSON();
 		displayRegistrations(res, crn);
 	}
 }

@@ -1,126 +1,10 @@
 {
     "crn": [
         {
-            "crn": "12345",
-            "registrations": [
-                {
-                    "active": true,
-                    "nextReviewDate": "2022-02-03",
-                    "numberOfPreviousDeregistrations": 0,
-                    "offenderId": 2500009234,
-                    "register": {
-                        "code": "4",
-                        "description": "Information"
-                    },
-                    "registerCategory": {
-                        "code": "I1",
-                        "description": "IOM - Statutory"
-                    },
-                    "registeringOfficer": {
-                        "code": "N07A003",
-                        "forenames": "Unallocate",
-                        "surname": "Unallocate",
-                        "unallocated": false
-                    },
-                    "registeringProbationArea": {
-                        "code": "N07",
-                        "description": "NPS London"
-                    },
-                    "registeringTeam": {
-                        "code": "N07UAT",
-                        "description": "Unallocated Team(N07)"
-                    },
-                    "registrationId": 2500212757,
-                    "reviewPeriodMonths": 6,
-                    "riskColour": "White",
-                    "startDate": "2021-08-03",
-                    "type": {
-                        "code": "IIOM",
-                        "description": "Integrated Offender Management"
-                    },
-                    "warnUser": false
-                },
-                {
-                    "active": true,
-                    "nextReviewDate": "2022-01-12",
-                    "numberOfPreviousDeregistrations": 0,
-                    "offenderId": 2500009234,
-                    "register": {
-                        "code": "2",
-                        "description": "Alerts"
-                    },
-                    "registerCategory": {
-                        "code": "X9",
-                        "description": "All - Category to be determined"
-                    },
-                    "registeringOfficer": {
-                        "code": "N07A003",
-                        "forenames": "Unallocate",
-                        "surname": "Unallocate",
-                        "unallocated": false
-                    },
-                    "registeringProbationArea": {
-                        "code": "N07",
-                        "description": "NPS London"
-                    },
-                    "registeringTeam": {
-                        "code": "N07UAT",
-                        "description": "Unallocated Team(N07)"
-                    },
-                    "registrationId": 2500206757,
-                    "reviewPeriodMonths": 6,
-                    "riskColour": "Amber",
-                    "startDate": "2021-07-12",
-                    "type": {
-                        "code": "AMHL",
-                        "description": "Mental Health Issues"
-                    },
-                    "warnUser": false
-                }
-            ]
-        },
-        {
             "crn": "23456",
             "registrations": [
                 {
                     "active": true,
-                    "nextReviewDate": "2023-02-03",
-                    "numberOfPreviousDeregistrations": 0,
-                    "offenderId": 2500009234,
-                    "register": {
-                        "code": "4",
-                        "description": "Information"
-                    },
-                    "registerCategory": {
-                        "code": "I1",
-                        "description": "IOM - Statutory"
-                    },
-                    "registeringOfficer": {
-                        "code": "N07A003",
-                        "forenames": "Unallocate",
-                        "surname": "Unallocate",
-                        "unallocated": false
-                    },
-                    "registeringProbationArea": {
-                        "code": "N07",
-                        "description": "NPS London"
-                    },
-                    "registeringTeam": {
-                        "code": "N07UAT",
-                        "description": "Unallocated Team(N07)"
-                    },
-                    "registrationId": 2500212757,
-                    "reviewPeriodMonths": 6,
-                    "riskColour": "White",
-                    "startDate": "2021-08-03",
-                    "type": {
-                        "code": "IIOM",
-                        "description": "Integrated Offender Management"
-                    },
-                    "warnUser": false
-                },
-                {
-                    "active": true,
                     "nextReviewDate": "2022-01-12",
                     "numberOfPreviousDeregistrations": 0,
                     "offenderId": 2500009234,
@@ -159,11 +43,11 @@
             ]
         },
         {
-            "crn": "88888",
+            "crn": "12345",
             "registrations": [
                 {
                     "active": true,
-                    "nextReviewDate": "2020-02-03",
+                    "nextReviewDate": "2023-02-03",
                     "numberOfPreviousDeregistrations": 0,
                     "offenderId": 999999,
                     "register": {
@@ -201,48 +85,6 @@
                 {
                     "active": true,
                     "nextReviewDate": "2022-01-12",
-                    "numberOfPreviousDeregistrations": 0,
-                    "offenderId": 999999,
-                    "register": {
-                        "code": "2",
-                        "description": "Alerts"
-                    },
-                    "registerCategory": {
-                        "code": "X9",
-                        "description": "All - Category to be determined"
-                    },
-                    "registeringOfficer": {
-                        "code": "N07A003",
-                        "forenames": "Unallocate",
-                        "surname": "Unallocate",
-                        "unallocated": false
-                    },
-                    "registeringProbationArea": {
-                        "code": "N07",
-                        "description": "NPS London"
-                    },
-                    "registeringTeam": {
-                        "code": "N07UAT",
-                        "description": "Unallocated Team(N07)"
-                    },
-                    "registrationId": 2500206757,
-                    "reviewPeriodMonths": 6,
-                    "riskColour": "Amber",
-                    "startDate": "2021-07-12",
-                    "type": {
-                        "code": "AMHL",
-                        "description": "Mental Health Issues"
-                    },
-                    "warnUser": false
-                }
-            ]
-        },
-        {
-            "crn": "99999",
-            "registrations": [
-                {
-                    "active": true,
-                    "nextReviewDate": "2019-01-12",
                     "numberOfPreviousDeregistrations": 0,
                     "offenderId": 999999,
                     "register": {
