@@ -41,12 +41,13 @@ function securityHeader(req){
 }
 /*--------------------------ENDPOINT FUNCTIONS--------------------------------*/
 function listRegistrations(res) {
-	res.write('<table style="border-spacing:1px;"><tr><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">CRN</th><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
+	res.write('<table style="border-spacing:1px;"><tr><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">');
+	res.write('CRN</th><th style="color:#f4e7d0;background-color:#5571B4;padding:10px;">Registrations</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
-		if ((i+1)%2 === 0) bgcol = 'B0BDDC'; //Odd colour
-		if ((i+1)%2 !== 0) bgcol = 'DCCFB0'; //Even colour
+    bgcol = ((i+1)%2 === 0) ? 'B0BDDC' : 'DCCFB0'; //Odd/Even Colour
 		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b>');
-		res.write('<br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'"></td><td style="background-color: #'+bgcol+';padding:5px">');
+		res.write('<br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'">');
+		res.write('</td><td style="background-color: #'+bgcol+';padding:5px">');
 		res.write('<pre>'+JSON.stringify(offdata.crn[i].registrations, null, 4)+'</pre></td></tr>');
 	}
 	res.write('</table>');
@@ -78,13 +79,12 @@ function edit(res, crn, req) {
 		var data = req.url.split('?');
 		var params = ''+data[1];
 		if (params.substring(0,5) == 'json=') {
-			data=decodeURIComponent(params.substring(5)).replace(/\+/g, ' ').replace(/\r?\n|\r/g, '');
+			data=decodeURIComponent(params.substring(5)).replace(/\+/g, ' ');
 			offdata.crn[foundindex].registrations = JSON.parse(data);
 			saveJSON();
-			listRegistrations(res);
+			res.write('<h2>Changes saved.</h2><input type="button" value="List Registrations" onclick="javascript:window.location = \'/list\'">');
 		} else {
-			res.write(decodeURIComponent(req.url));
-			res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2>');
+			res.write('<h1>EDIT</h1><h2>CRN :'+crn+'</h2><input type="button" value="List Registrations" onclick="javascript:window.location = \'/list\'">');
 			res.write('<form action="" method="get"><textarea name="json" style="width: 300px;height: 150px;">');
 			res.write(JSON.stringify(registrations, null, 4));
 			res.write('</textarea><br/><input type="submit"></form>');
