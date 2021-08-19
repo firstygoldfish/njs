@@ -34,7 +34,7 @@ lineReader.on('line', function (line) {
 			wcmsg = wcmsg + lineb[i].trim().replace(",",";");
 		}
 		if (wcmsg.length > 1) console.log(dfname+","+uiname+","+wcmsg+","+line.trim().substr(0,line.indexOf(")")).replace(",",";"));
-		indf = 0;
+		//indf = 0;
 		wcmsg = "";
 	}
 	lineb[3] = lineb[2];
