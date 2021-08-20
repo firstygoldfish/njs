@@ -1,14 +1,12 @@
-var http = require('http'),
-	  url = require('url'),
-      fs = require('fs');
+/*-----------------------------------IMPORTS----------------------------------*/
+import fs      from "fs"
+import express from "express";
 /*--------------------------------CONFIGURATION-------------------------------*/
-var port = 8080;
-var ip = '127.0.0.1';
+var port = 8088;
+var ip = "127.0.0.1";
 var jsonfile = 'iomdata.json';
 var newcrnfile = 'newcrndata.json';
 var newiomcrnfile = 'newiomcrndata.json';
-/*--------------------------DO NOT CHANGE BELOW HERE--------------------------*/
-/*----------------------------------------------------------------------------*/
 /*----------------------------CORE VARIABLES----------------------------------*/
 var notfound = '{"status":"notfound"}';
 var ok = '{"status":"ok"}';
@@ -47,7 +45,7 @@ function listRegistrations(res) {
 	res.write('<div style="display: flex; justify-content: center"><table style="border-spacing:1px;"><tr><th style="color:#101010;padding:10px;">CRN</th>');
 	res.write('<th style="color:#101010;padding:10px;">REGISTRATIONS</th></tr>')
 	for (var i=0; i < offdata.crn.length; i++){
-    bgcol = ((i+1)%2 === 0) ? 'B0BDDC' : 'DCCFB0'; //Odd/Even Colour
+		var bgcol = ((i+1)%2 === 0) ? 'B0BDDC' : 'DCCFB0'; //Odd/Even Colour
 		res.write('<tr><td style="background-color:#'+bgcol+';padding:5px;vertical-align:top;"><b>'+offdata.crn[i].crn+'</b>');
 		res.write('<br/><input type="button" value="Edit" onclick="javascript:window.location = \'/edit/'+offdata.crn[i].crn+'\'">');
 		res.write('</td><td style="background-color: #'+bgcol+';padding:5px">');
@@ -67,7 +65,7 @@ function displayRegistrations(res, crn) {
 	}
 	if (found === 0) res.write(notfound);
 }
-function edit(res, crn, req) {
+function edit(req, res, crn) {
 	var found = 0;
 	var foundindex = 0;
 	var registrations = '';
@@ -81,10 +79,8 @@ function edit(res, crn, req) {
 	if (found === 0) {
 		res.write(notfound+',{crn:'+crn+'}');
 	} else {
-		var data = req.url.split('?');
-		var params = ''+data[1];
-		if (params.substring(0,5) == 'json=') {
-			data=decodeURIComponent(params.substring(5)).replace(/\+/g, ' ');
+		var data = req.query.json; // $_GET["json"]
+		if (data != undefined) {
 			offdata.crn[foundindex].registrations = JSON.parse(data);
 			saveJSON();
 			res.write('<!DOCTYPE html><html style="position: relative; min-height: 100%; background: local url(data:image/gif;base64,'+bgdata+');">');
@@ -101,7 +97,7 @@ function edit(res, crn, req) {
 		}
 	}
 }
-function addRegistration(res, crn, iom) {
+function addRegistrations(res, crn, iom) {
 	var found = 0;
 	for (var i=0; i< offdata.crn.length; i++){
 		if (offdata.crn[i].crn == crn) {
@@ -121,72 +117,41 @@ function addRegistration(res, crn, iom) {
 		listRegistrations(res);
 	}
 }
-/*----------------------------------ENDPOINTS---------------------------------*/
-// SETUP ENDPOINTS/OPERATIONS
-var endpoints = {
-	list: function(res,parts){         //List CRNs
-		listRegistrations(res);
-	},
-	addiom: function(res,parts){       //Add IOM CRN
-		var crn=parts[2];
-		if (crn !== undefined) {
-		  addRegistration(res, crn, true);
-		} else {
-		  res.write(bad);
-		}
-	},
-	addnoniom: function(res,parts){    //Add NON-IOM CRN
-		var crn=parts[2];
-		if (crn !== undefined) {
-		  addRegistration(res, crn, false);
-		} else {
-		  res.write(bad);
-		}
-	},
-	edit: function(res,parts,req){     //Add NON-IOM CRN
-		var crn=parts[2];
-		if (crn.indexOf('?') > 0) crn = crn.substring(0,crn.indexOf('?'));  //Strip url parameters from POST
-		if (crn !== undefined) {
-		  edit(res, crn, req);
-		} else {
-		  res.write(bad);
-		}
-	},
-	crn: function(res,parts){          //List registrations for CRN
-		var crn=parts[4];
-		var func=parts[5];
-		if (crn !== undefined && func == 'registrations') {
-		  displayRegistrations(res, crn);
-		} else {
-		  res.write(bad);
-		}
-	}
-}
-/*------------------------------------SERVER----------------------------------*/
+/*-----------------------------APP INITIALISE---------------------------------*/
 var offdata = loadJSON(jsonfile);
-http.createServer(function(req, res) {	//Example URL /secure/offenders/crn/23456/registrations
-	var parts = req.url.split('/');
-	//Get the endpoint function
-	if (parts[1] == 'list') {
-		endpoint = endpoints[parts[1]];
-	} else if (parts[1] == 'addiom') {
-		endpoint = endpoints[parts[1]];
-	} else if (parts[1] == 'addnoniom') {
-		endpoint = endpoints[parts[1]];
-	} else if (parts[1] == 'edit') {
-		endpoint = endpoints[parts[1]];
-	}  else {
-		endpoint = endpoints[parts[3]];
-	}
-	if (parts[1] == 'list' || parts[1] == 'addiom' || parts[1] == 'addnoniom' || parts[1] == 'edit') { //Skip security check-Call the endpoint
-		res.writeHead(200, {'Content-Type': 'text/html'});
-		endpoint ? endpoint(res,parts,req) : res.write('{"status":"Error"}');
-	} else if (securityHeader(req) === true) {                                   //Do security check
-		res.writeHead(200, {'Content-Type': 'text/plain'});
-		endpoint ? endpoint(res,parts) : res.write('{"status":"Error"}');
-	} else {
-		res.writeHead(401, 'missing authorization header');
-	}
-	res.end('');
-}).listen(port, ip);
-console.log('Running http://'+ip+':'+port);
+const app = express();
+app.use(express.json());
+app.get('/list', (request, response)=> {
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	listRegistrations(response);
+	response.end('');
+});
+app.get('/secure/offenders/crn/:crn/registrations/', (request, response)=> {
+	var crn = request.params.crn;
+	response.writeHead(200, {'Content-Type': 'text/plain'});
+	displayRegistrations(response,crn);
+	response.end('');
+});
+app.get('/edit/:crn/', (request, response)=> {
+	var crn = request.params.crn;
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	edit(request,response,crn);
+	response.end('');
+});
+app.get('/addiom/:crn/', (request, response)=> {
+	var crn = request.params.crn;
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	addRegistrations(response,crn,true);
+	response.end('');
+});
+app.get('/addnoniom/:crn/', (request, response)=> {
+	var crn = request.params.crn;
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	addRegistrations(response,crn,false);
+	response.end('');
+});
+/*----------------------------START HTTP SERVER-------------------------------*/
+app.listen(port, () => {
+  console.log('Running on port ' + port);
+});
+
