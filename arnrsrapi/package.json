@@ -1,0 +1,15 @@
+{
+  "name": "arnrsrapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "arnrsrapi.js",
+  "scripts": {
+    "start": "nodemon --watch arnrsrapi.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
