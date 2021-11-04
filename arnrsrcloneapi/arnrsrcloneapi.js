@@ -161,7 +161,7 @@ app.get('/list', (request, response)=> {
 });
 app.get('/subject/:crn/assessments/episodes/RSR/latest/', (request, response)=> {
 	var crn = request.params.crn;
-	if (securityHeader(request) === true) {                                   //Do security check
+	if (securityHeader(request) === true) {                        //Do security check
 		response.writeHead(200, {'Content-Type': 'text/plain'});
 		displayFunc(response,crn);
 	} else {
