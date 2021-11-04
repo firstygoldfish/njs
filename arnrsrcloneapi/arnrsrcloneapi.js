@@ -37,14 +37,14 @@ function homeFunc(response) {
 	<div style="display:flex;justify-content:center">\
 	<input type="button" value="List Episodes" onclick="javascript:window.location = \'/list\'"></div><p> </p>\
 	<div style="display:flex;justify-content:center">\
-	<form><label>Add New CRN: </label><input id="crn" type="test"></input>\
-	<button onclick="javascript:window.open(\'/add/\'+document.getElementById(\'crn\').value)">Save</button></form></div></html>');
+	<form><label style="font-weight:bold;">Add New CRN: </label><input id="crn" type="test"></input>\
+	<input type="button" value="Create" onclick="javascript:window.location = \'/add/\'+document.getElementById(\'crn\').value">');
 }
 function listFunc(response) {
 	response.write(headerbg.replace('~bg~',bgdata)+'\
 			<div style="display:flex;justify-content:center"><h1>CRN DATA LIST</h1></div>\
-			<div style="display:flex;justify-content:center"><form><label>Add New CRN: </label><input id="crn" type="test"></input>\
-			<button onclick="javascript:window.open(\'/add/\'+document.getElementById(\'crn\').value)">Save</button></form></div><p> </p>\
+			<div style="display:flex;justify-content:center"><form><label style="font-weight:bold;">Add New CRN: </label><input id="crn" type="test"></input>\
+			<input type="button" value="Create" onclick="javascript:window.location = \'/add/\'+document.getElementById(\'crn\').value"></form></div><p> </p>\
 			<div style="display:flex;justify-content:center">\
 			<table style="border-spacing:1px;"><tr><th style="color:#101010;padding:10px;"></th>\
 			<th style="color:#101010;padding:10px;">EPISODES (Assessment Answers)</th></tr>');
