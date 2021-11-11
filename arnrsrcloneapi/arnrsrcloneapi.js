@@ -64,12 +64,16 @@ function displayFunc(response, crn) {
 	for (var i=0; i< offdata.crns.length; i++){
 		if (offdata.crns[i].crn == crn) {
 			found++;
+			response.writeHead(200, {'Content-Type': 'text/plain'});
 			response.write('{\"episodes\": ');
 			response.write(JSON.stringify(offdata.crns[i].episodes, null, 4));
 			response.write('}');
 		}
 	}
-	if (found === 0) response.write(notfound);
+	if (found === 0) {
+		response.writeHead(404, {'Content-Type': 'text/plain'});
+		response.write(notfound);
+	}
 }
 function editFunc(request, response, crn) {
 	var found = 0;
@@ -156,13 +160,12 @@ app.get('/', (request, response)=> {
 });
 app.get('/list', (request, response)=> {
 	response.writeHead(200, {'Content-Type': 'text/html'});
-	listFunc(response);
+	listFunc(response); 
 	response.end('');
 });
 app.get('/subject/:crn/assessments/episodes/RSR/latest/', (request, response)=> {
 	var crn = request.params.crn;
 	if (securityHeader(request) === true) {                        //Do security check
-		response.writeHead(200, {'Content-Type': 'text/plain'});
 		displayFunc(response,crn);
 	} else {
 		response.writeHead(401, 'missing authorization header');
