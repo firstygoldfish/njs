@@ -1,0 +1,11 @@
+
+C:\Users\p10114900\Desktop\PNJS\_PROJECTS\cmdsrv>net use 
+New connections will be remembered.
+
+
+Status       Local     Remote                    Network
+
+-------------------------------------------------------------------------------
+OK                     \\10.0.1.18\DROPBOX       Microsoft Windows Network
+The command completed successfully.
+
