@@ -2,7 +2,7 @@
 import fs      from "fs"
 import express from "express";
 /*--------------------------------CONFIGURATION-------------------------------*/
-var port = 8081;
+var port = 8082;
 var ip = "127.0.0.1";
 var jsonfile = 'iomdata.json';
 var newcrnfile = 'newcrndata.json';

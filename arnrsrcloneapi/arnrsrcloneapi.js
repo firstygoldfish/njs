@@ -37,6 +37,8 @@ function homeFunc(response) {
 	<div style="display:flex;justify-content:center">\
 	<input type="button" value="List Episodes" onclick="javascript:window.location = \'/list\'"></div><p> </p>\
 	<div style="display:flex;justify-content:center">\
+	<input type="button" value="Clear Z CRN\'s" onclick="javascript:if(confirm(\'Are you sure you want to delete ALL Z CRN\\\'s \')) window.location = \'/delete/CLEARZ\'"></div><p> </p>\
+	<div style="display:flex;justify-content:center">\
 	<form><label style="font-weight:bold;">Add New CRN: </label><input id="crn" type="test"></input>\
 	<input type="button" value="Create" onclick="javascript:window.location = \'/add/\'+document.getElementById(\'crn\').value">');
 }
@@ -131,14 +133,21 @@ function addFunc(response, crn) {
 	}
 }
 function deleteFunc(response, crn) {
-	var found = -1;
+	var cleardown = 0;
+	var found = 0;
+	if (crn == 'CLEARZ') cleardown = 1 
 	for (var i=0; i< offdata.crns.length; i++){
-		if (offdata.crns[i].crn == crn) {
-			found=i;
+		console.log('DIAG:'+cleardown+':'+offdata.crns[i].crn.substring(0,1));
+		if ( offdata.crns[i].crn == crn || (cleardown > 0 && offdata.crns[i].crn.substring(0,1) == 'Z') ) {
+			found++;
+			offdata.crns.splice(i,1);
+			if (cleardown == 1 ) {
+				i--;
+			}
 		}
 	}
-	if (found > -1) {
-		offdata.crns.splice(found,1);
+	if (found > 0) {
+	console.log('FOUND:'+found);
 		saveJSON();
 		listFunc(response);
 	} else {

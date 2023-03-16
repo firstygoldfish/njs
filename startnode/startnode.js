@@ -18,4 +18,3 @@ if (fs.statSync(currdir+'/'+file).isDirectory()) {
 	console.log(file);
 };
 });
-

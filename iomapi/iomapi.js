@@ -88,7 +88,7 @@ function edit(res, crn, req) {
 			offdata.crn[foundindex].registrations = JSON.parse(data);
 			saveJSON();
 			res.write('<!DOCTYPE html><html style="position: relative; min-height: 100%; background: local url(data:image/gif;base64,'+bgdata+');">');
-			res.write('<div style="display: flex; justify-content: center"><h2 style="color: #101010;">Changes saved.</h2></div><br/><input type="button" value="List Registrations" onclick="javascript:window.location = \'/list\'">');
+			res.write('<div><h2 style="color: #c9c9c9;">Changes saved.</h2></div><br/><input type="button" value="Home" onclick="javascript:window.location = \'/list\'">');
 			res.write('</html>');
 		} else {
 			res.write('<!DOCTYPE html><html style="position: relative; min-height: 100%; background: local url(data:image/gif;base64,'+bgdata+');">');

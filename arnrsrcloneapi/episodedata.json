@@ -1,7 +1,7 @@
 {
     "crns": [
         {
-            "crn": "23456",
+            "crn": "CL2345",
             "episodes": [
                 {
                     "episodeUuid": "90f2b674-ae1c-488d-8b85-0251708ef6b6",
@@ -152,12 +152,163 @@
             ]
         },
         {
-            "crn": "CL2345",
+            "crn": "KELVIN99",
             "episodes": [
                 {
                     "episodeUuid": "90f2b674-ae1c-488d-8b85-0251708ef6b6",
                     "assessmentUuid": "6f3f2c4a-38ac-49ce-b790-70bc170fe553",
-                    "created": "2021-03-01T08:11:53.177109",
+                    "created": "2021-01-01T08:11:53.177109",
+                    "ended": "2021-09-16T16:08:39.298419",
+                    "answers": {
+                        "episodeAnswers": [
+                            {
+                                "questionCode": "9.2",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "R1.2.7.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "9.1",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "1.32",
+                                "answer": "10"
+                            },
+                            {
+                                "questionCode": "R1.2.12.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "R1.2.2.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "11.2",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "1.30",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.39",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.8.2",
+                                "answer": "01/01/2021"
+                            },
+                            {
+                                "questionCode": "R1.2.9.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.38",
+                                "answer": "01/01/2025"
+                            },
+                            {
+                                "questionCode": "11.4",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "4.2",
+                                "answer": "0"
+                            },
+                            {
+                                "questionCode": "R1.2.13.1_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.41",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "12.1",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "3.4",
+                                "answer": "1"
+                            },
+                            {
+                                "questionCode": "1.40",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "1.29",
+                                "answer": "01/01/2021"
+                            },
+                            {
+                                "questionCode": "R1.2.1.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "R1.2.13.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "R1.2.8.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "R1.2.10.1_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "6.7",
+                                "answer": "NO"
+                            },
+                            {
+                                "questionCode": "R1.2.10.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.34",
+                                "answer": "5"
+                            },
+                            {
+                                "questionCode": "1.35",
+                                "answer": "3"
+                            },
+                            {
+                                "questionCode": "R1.2.6.2_V2",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.42",
+                                "answer": "YES"
+                            },
+                            {
+                                "questionCode": "1.33",
+                                "answer": "01/01/2021"
+                            },
+                            {
+                                "questionCode": "6.4",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "1.37",
+                                "answer": "2"
+                            },
+                            {
+                                "questionCode": "1.36",
+                                "answer": "2"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "crn": "KB989898",
+            "episodes": [
+                {
+                    "episodeUuid": "90f2b674-ae1c-488d-8b85-0251708ef6b6",
+                    "assessmentUuid": "6f3f2c4a-38ac-49ce-b790-70bc170fe553",
+                    "created": "2021-01-01T08:11:53.177109",
                     "ended": "2021-09-16T16:08:39.298419",
                     "answers": {
                         "episodeAnswers": [

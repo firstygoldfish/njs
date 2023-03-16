@@ -1,0 +1,15 @@
+{
+  "name": "azuremon",
+  "version": "1.0.0",
+  "description": "Azure machine monitor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carl Last",
+  "license": "ISC",
+  "dependencies": {
+    "node-csv-parse": "^1.2.0",
+    "simple-ssh": "^1.1.0"
+  }
+}
