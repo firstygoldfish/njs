@@ -7,7 +7,7 @@ IDLINFO=`echo $SARINFO | cut -f6 -d','`
 echo "{"
 echo "\"CPU\" : { \"USER\":"$USERINFO", \"SYS\":"$SYSINFO", \"IOWAIT\":"$IOWINFO", \"IDLE\":"$IDLINFO" }"
 #PID,%CPU,COMMAND
-CPUPROCS=`export SORT=%cpu;ps -eo pid,$SORT,comm --sort=-"$SORT" | sed "s/ * /,/g;s/^,//g" | head -10 | tail -9`
+CPUPROCS=`export SORT=%cpu;ps -eo pid,$SORT,cmd --sort=-"$SORT" | sed "s/ * /,/g;s/^,//g" | head -10 | tail -9`
 echo ", \"CPUPROCS\" : [ "
 LINEZ=0
 for i in $CPUPROCS
@@ -20,7 +20,7 @@ CMD=`echo $i | cut -f3 -d','`
 echo "{ \"PID\" : $PID, \"CPU\" : $CPU, \"CMD\" : \"$CMD\" }"
 done
 echo "]"
-MEMPROCS=`export SORT=%mem;ps -eo pid,$SORT,comm --sort=-"$SORT" | sed "s/ * /,/g;s/^,//g" | head -10 | tail -9`
+MEMPROCS=`export SORT=%mem;ps -eo pid,$SORT,cmd --sort=-"$SORT" | sed "s/ * /,/g;s/^,//g" | head -10 | tail -9`
 echo ", \"MEMPROCS\" : [ "
 LINEZ=0
 for i in $MEMPROCS

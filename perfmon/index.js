@@ -46,17 +46,21 @@ function displayCmdOutput(res,cmdoutp) {
 	res.write('<label for="sys">SYS:</label><progress id="sys" value="'+data.CPU.SYS+'" max="100"> '+data.CPU.IDLE+'% </progress>');
 	res.write('<label for="user">USER:</label><progress id="user" value="'+data.CPU.USER+'" max="100"> '+data.CPU.IDLE+'% </progress><hr>');
 	res.write('<h2>CPU INTENSIVE PROCESSES</h2>');
+	res.write('<table border="1"><tr><th>PID</th><th>COMMAND</th><th>%CPU</th></tr>');
 	for (var proc in data.CPUPROCS)
 	{
-	  res.write('['+data.CPUPROCS[proc].PID+':'+data.CPUPROCS[proc].CMD+']');
-	  res.write('<progress value="'+data.CPUPROCS[proc].CPU+'" max="100"> '+data.CPUPROCS[proc].CPU+'% </progress>'+data.CPUPROCS[proc].CPU+'%<br>');
+	  res.write('<tr><td>'+data.CPUPROCS[proc].PID+'</td><td>'+data.CPUPROCS[proc].CMD+'</td>');
+	  res.write('<td><progress value="'+data.CPUPROCS[proc].CPU+'" max="100"> '+data.CPUPROCS[proc].CPU+'% </progress>'+data.CPUPROCS[proc].CPU+'%</td></tr>');
 	}
+	res.write('</table>');
 	res.write('<h2>MEMORY USAGE PROCESSES</h2>');
+	res.write('<table border="1"><tr><th>PID</th><th>COMMAND</th><th>%MEMORY</th></tr>');
 	for (var proc in data.MEMPROCS)
 	{
-	  res.write('['+data.MEMPROCS[proc].PID+':'+data.MEMPROCS[proc].CMD+']');
-	  res.write('<progress value="'+data.MEMPROCS[proc].MEM+'" max="100"> '+data.MEMPROCS[proc].MEM+'% </progress>'+data.MEMPROCS[proc].MEM+'%<br>');
+	  res.write('<tr><td>'+data.MEMPROCS[proc].PID+'</td><td>'+data.MEMPROCS[proc].CMD+'</td>');
+	  res.write('<td><progress value="'+data.MEMPROCS[proc].MEM+'" max="100"> '+data.MEMPROCS[proc].MEM+'% </progress>'+data.MEMPROCS[proc].MEM+'%</td></tr>');
 	}
+	res.write('</table>');
 	footer(res);
 }
 
