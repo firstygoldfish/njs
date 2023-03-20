@@ -2,6 +2,8 @@ let headerbg = '<!DOCTYPE html><html style="position: relative; min-height: 100%
 let bgdata  = 'iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAztJREFUaEPlWttu2kAQPah0FbvcSggKlSMESlEe2v7/f7QPURsVoaASNYRySXHkULlaszbG2OysDaRs/WZ7PDNnbp6d3VzR6rjAAvLLARxBxRjgLG/Ozhu4Hz0E93I+EQrGcFY9xf3dYPkixBvMe0BgmUeuaLVdX6ngG64jZxhcAgR/5IMhsM9E4suKguEG9FULGTZX73xy7fFIWMO3gKBQVTpsTRkKFVqfV2BbgVLoZ1Sq3CMdF848XmwUuUQ5HmantSquv3aRzNPEVaeFh+FoFU5S0IIgybDMjAutVfzL+Me9v2i38MYs4PrL59jPrz58xO/5I26/d9OwX+URj/FwaK3lSJS1ikdCocLBLP48Y9Drr3FsNC3kX71egaCGl0wPxoRHkIfBAPsxIcRS2M4omDhvvEO3d+N93Wpe4m7wY+cybM8riyUQwzxBpVxaWdCrWCHXpQAyg4NipHTGPVNi7VcwUfq5h8eTKez5EwdiuatYO2B5VUIQQxz+FTAgV6xbrmc41VJLUCTsgczeSJIndF8C2ccVZ5w9GYyrHw+EWk32YQAZzwTdEoCYyT+0kKAZgKJMMPE9mReL120TCNH9ZMFEIJyMzDNGx3UgfqMoyltYh6gQstAMQBJlxOgpT3Zmolw6wWQoGkuh2CGAcFHlWhWT6ZM01AlAAMMswR5P6a5X8EISqW8oo1KCPZ9Kfw9yIDtQ6hAsSEC2hlHBBLL2aFt4UENYDkRSxRqWhUF/vctV9YCUB6GSyoFstPbZ1iskkCl+yHIga8MAE+8vm/h208PMGW90tyQltxB5/RirBDKCVSYBmBxIUG5FW84YLqwGhqNfXiXb5cUrVK36Frf9gTeVUWk0yUB8hTnzeqEC21mkHwEldrIMBsvj56O6t5WB7NIDu+T1/wI5+tAKEu9ok1238hskJqGmZ07iFDLkya5Ti6JH05g5Tg7DgBRaeiysjnKpq9XwgbCIURrdKKQIdTUYN+LVeEDHLZjih6Rg+GykSiPTbKKWX7/IEJuYF6r4DrutoM1Gjz5bb20XumyGBkc4NmZY4gFlW+6f2J72txEiu6aqyc3pX/DAgCZHODQ6VKPJMSddDp79BVyqBYeVgEL/AAAAAElFTkSuQmCC';
 let bgdata2 = 'iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAA1FJREFUaEPlWtFq2zAUPYEgEi9OyzbCAoayjOVh0P3/d6xvG9soBDLKNtakS4oJeFxLsmXH0pUzl8Wan1r7WtK555wrRdYgniUZbJcA5vME69uVNUQ/2CJFDFHE1f+nBz4xTR3NrxKs1ysgtQ9j4ALSNBgW0RMFcGNhgACxGhjXkDn+Lcr36rhcz45jS5a595xAfJNLndA1m0TYP+wa5VVPxHgS4U7F6mT59tcUx0prebXAev0TSHfgMk0iNn3iGhgBA0TBuJU5EWE+f46Pt1+cbQ/i2SJzuugEaf1NZqsS9U2MQCsgrgyW1cvuj7Yx/gwTkGSRIXXUtVp6fUxP+je9YjbhemYr5SzDogUjTfOAqyJx8whXhXwSVvavGaE7FlakKYFYTPIYbgB1+Ywvp/mt/a9N63chBLbpg+zfmGwrCRRyEpYeob8ZecnZVVYv7tLlOJ5EZbyIsG1TblW1YlcVBCT1BFKhOX/RzkyFMVEFopNgY7W4r/rwkTOxJoEkyww4sIxwLMhO5TW7nOZSarpIanfqWRcTYQ4EQ1W1dI8OnyQvX+F+8+gpLXv99zaxiHAxHWH1/RvrD+kRKr/mZfNKISllfpv5FDO2bHPFoigu1L4hsSN2lcn1/VJaDlbMLPpmlCu/Lql69VcBkktLeSRveQjpl7we+9iiiOEy3dTYKe/Q6kKKQY1VjfuYkRxDOxCtEHcRXJOVYXYTnerpXME0gCAVKUaIhYNEkE+O7aXVRaL92lDS0qIRRAIwmC3fZWL4DPebH9V2esLIxfQF0sNvDOLFMhsPR9jvHhWQ08zul80uokyzA+NohP3h0axakqKuZvkuhmxtQ83mxXjlzK7KL2mtKFbdLFmeBIwJIvczedtYory/vsanz1+VxM4fCEnq7ZvX+HBzI82ulygBAAlGWnqJ0nezh1J+w5kQ8/IbwBJFVq1gFo1qwahnsHNdZ+nxNS/jQ/1h1cCG10/P2nrkH/zUDWbzwQDS7+2gUDboPPZ++7Fl6gGEfHz+m9h6pzGIzwqem3HcLqO54caVX25zjuurWu3/x09v3OdknSEu0xTnG9PuY2g4n6fth2qIhR4dGHCcDvLcz+nBEY5ADtW0K4Ge9J0Yxo3FfTqoRwfP/gDLVTyTisG+ewAAAABJRU5ErkJggg==';
 let cssData = '<style>.white { background-color: #FFFFDD; } .green { background-color: #00CC33; } .blue { background-color: #003C82; } .orange { background-color: #FFCC33; } .div { margin: auto; width: 50%; border: 3px solid #12A0D7; padding: 10px; } .button { border-radius: 8px; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;}</style>';
+let dbProcess = '<span style="background-color:#f00;color:#fff">DB-DAEMON</span>';
+let dbSession = '<span style="background-color:#00f;color:#fff">DB-SESSION</span>';
 
 const { exec } = require("child_process")
 const express = require('express')
@@ -49,6 +51,9 @@ function displayCmdOutput(res,cmdoutp) {
 	res.write('<table border="1"><tr><th>PID</th><th>COMMAND</th><th>%CPU</th></tr>');
 	for (var proc in data.CPUPROCS)
 	{
+	  var strt = data.CPUPROCS[proc].CMD;
+	  if (strt.substr(0,3) == "xe_" || strt.substr(0,3) == "ora_") { data.CPUPROCS[proc].CMD = data.CPUPROCS[proc].CMD+' '+dbProcess; }
+	  if (strt.substr(0,6) == "oracle" ) { data.CPUPROCS[proc].CMD = data.CPUPROCS[proc].CMD+' '+dbSession; }
 	  res.write('<tr><td>'+data.CPUPROCS[proc].PID+'</td><td>'+data.CPUPROCS[proc].CMD+'</td>');
 	  res.write('<td><progress value="'+data.CPUPROCS[proc].CPU+'" max="100"> '+data.CPUPROCS[proc].CPU+'% </progress>'+data.CPUPROCS[proc].CPU+'%</td></tr>');
 	}
@@ -57,6 +62,9 @@ function displayCmdOutput(res,cmdoutp) {
 	res.write('<table border="1"><tr><th>PID</th><th>COMMAND</th><th>%MEMORY</th></tr>');
 	for (var proc in data.MEMPROCS)
 	{
+	  var strt = data.MEMPROCS[proc].CMD;
+	  if (strt.substr(0,3) == "xe_" || strt.substr(0,3) == "ora_") { data.MEMPROCS[proc].CMD = data.MEMPROCS[proc].CMD+' '+dbProcess; }
+	  if (strt.substr(0,6) == "oracle" ) { data.MEMPROCS[proc].CMD = data.MEMPROCS[proc].CMD+' '+dbSession; }
 	  res.write('<tr><td>'+data.MEMPROCS[proc].PID+'</td><td>'+data.MEMPROCS[proc].CMD+'</td>');
 	  res.write('<td><progress value="'+data.MEMPROCS[proc].MEM+'" max="100"> '+data.MEMPROCS[proc].MEM+'% </progress>'+data.MEMPROCS[proc].MEM+'%</td></tr>');
 	}
