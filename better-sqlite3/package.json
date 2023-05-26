@@ -1,0 +1,16 @@
+{
+  "name": "better-sqlite3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "better-sqlite3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^8.4.0"
+  }
+}
