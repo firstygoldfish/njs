@@ -36,10 +36,40 @@ function dbiterate() {
 		stmt = db.prepare('SELECT * from user_data');
 	} catch (err) { console.log(' ' + err);  return; }
 	for (const row of stmt.iterate()) {
-		console.log(row.username + ' - ' + row.area)
+		console.log(row.username + ' - ' + row.area);
 	}
 }
-
+function columns() {
+	let stmt = null;
+	let cols = null;
+	try {
+		stmt = db.prepare('SELECT * from user_data');
+	} catch (err) { console.log(' ' + err);  return; }
+	console.log(stmt.columns().length + ' Columns');
+	for (const col of stmt.columns()) {
+		if (cols == null) { cols = col.name + '|'; }
+		if (cols != null)  { cols = cols + col.name + '|'; }
+	}
+	console.log(cols);
+}
+function columns2() {
+	let stmt = null;
+	let cols = null;
+	try {
+		stmt = db.prepare('SELECT * from user_data');
+	} catch (err) { console.log(' ' + err);  return; }
+	let columns = stmt.columns();
+	for (const row of stmt.iterate()) {
+		let dbdata = null;
+		for (const col of columns) {
+			if (dbdata != null) dbdata = dbdata + eval('row.' + col.name) + '|';
+			if (dbdata == null) dbdata = eval('row.' + col.name) + '|';
+			//if (dbdata == null) dbdata = '[' + col.name + ']' + eval('row.' + col.name) + ' ';
+			//if (dbdata != null) dbdata = dbdata + '[' + col.name + ']' + eval('row.' + col.name) + ' ';
+		}
+		console.log(dbdata);
+	}
+}
 
 const db = new Database('launcharndb.sqlite');
 if (db) { console.log('Database opened'); } else { console.log('DB ERROR - Datbase NOT available'); }
@@ -50,3 +80,5 @@ dbinsert();
 dbiterate();
 dbdelete();
 dbiterate();
+columns();
+columns2();
