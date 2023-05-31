@@ -10,16 +10,21 @@ function dbquery() {
 function dbupdate() {
 	let row = null;
 	try {
-		row = db.prepare('update user_data set username = username where username=\'OASYS_ADMIN\'').run();
+		// Bind parameters on prepare
+		row = db.prepare('update user_data set username = username where username=?').bind('OASYS_ADMIN').run();
 	} catch (err) { console.log(' ' + err);  return; }
 	console.log(row.changes + ' records updated');
 }
 function dbinsert() {
 	let row = null;
 	try {
-		row = db.prepare('insert into user_data (username, area, sessionid, url) values (\'CARL\',\'ESSEX\',\'123456\',\'www.msn.com\')').run();
+		const stmt = db.prepare('insert into user_data (username, area, sessionid, url) values (?,?,?,?)');
+		// Bind parameters on run
+		let res = stmt.run('CARL','ESSEX','123456','www.msn.com');
+		console.log(res.changes + ' records inserted');
+		res = stmt.run('CARL','KENT','987654','www.google.com');
+		console.log(res.changes + ' records inserted');
 	} catch (err) { console.log(' ' + err);  return; }
-	console.log(row.changes + ' records inserted');
 	dbquery();
 }
 function dbdelete() {
@@ -74,11 +79,16 @@ function columns2() {
 const db = new Database('launcharndb.sqlite');
 if (db) { console.log('Database opened'); } else { console.log('DB ERROR - Datbase NOT available'); }
 
+console.log('**QUERY**');
 dbquery();
+console.log('**UPDATE**');
 dbupdate();
+console.log('**INSERT**');
 dbinsert();
+console.log('**ITERATE**');
 dbiterate();
+console.log('**DELETE**');
 dbdelete();
-dbiterate();
+console.log('**COLUMN QUERIES**');
 columns();
 columns2();
