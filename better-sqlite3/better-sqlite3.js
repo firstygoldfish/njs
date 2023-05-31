@@ -30,7 +30,7 @@ function dbinsert() {
 function dbdelete() {
 	let row = null;
 	try {
-		row = db.prepare('delete from user_data where username = \'CARL\'').run();
+		row = db.prepare('delete from user_data where username = ?').bind('CARL').run();
 	} catch (err) { console.log(' ' + err);  return; }
 	console.log(row.changes + ' records deleted');
 	dbquery();
@@ -52,12 +52,12 @@ function columns() {
 	} catch (err) { console.log(' ' + err);  return; }
 	console.log(stmt.columns().length + ' Columns');
 	for (const col of stmt.columns()) {
-		if (cols == null) { cols = col.name + '|'; }
-		if (cols != null)  { cols = cols + col.name + '|'; }
+		if (cols == null) { cols = col.name.toUpperCase() + '|'; }
+		if (cols != null)  { cols = cols + col.name.toUpperCase() + '|'; }
 	}
 	console.log(cols);
 }
-function columns2() {
+function columnsQuery() {
 	let stmt = null;
 	let cols = null;
 	try {
@@ -91,4 +91,4 @@ console.log('**DELETE**');
 dbdelete();
 console.log('**COLUMN QUERIES**');
 columns();
-columns2();
+columnsQuery();
