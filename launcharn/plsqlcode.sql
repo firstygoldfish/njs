@@ -4,7 +4,7 @@
         res utl_http.resp;
         name varchar2(4000);
         buffer varchar2(4000); 
-        content varchar2(4000) := '{"code":100,"id": "APA"}';   
+        content varchar2(4000) := '{"username":"OASYS_ADMIN", "area": "APA", "returnURL":"' || APEX_UTIL.HOST_URL||'/ords/'||APEX_PAGE.GET_URL); --||' prepared='||APEX_UTIL.PREPARE_URL(APEX_PAGE.GET_URL || '"}';   
     BEGIN
     
         req := utl_http.begin_request(p_url, 'POST',' HTTP/1.1');
